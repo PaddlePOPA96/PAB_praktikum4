@@ -1,4 +1,3 @@
-
 import { View } from "react-native";
 
 // Functional Component with props
@@ -7,6 +6,3 @@ const Separator = (props) => {
 };
 
 export default Separator;
-
-
-

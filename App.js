@@ -32,8 +32,6 @@ const App = () => {
       <Button text="Close" onPress={() => drawer.current.closeDrawer()} />
     </View>
   );
-  
-
 
   return (
     <SafeAreaView>
@@ -47,11 +45,11 @@ const App = () => {
       <View>
         <Header drawer={drawer} />
         {page == "list" ? <List /> : page == "article" ? <Article /> : null}
-      </View>
+      </View>      
     </DrawerLayoutAndroid>
     </SafeAreaView>
-
   );
 };
 
 export default App;
+

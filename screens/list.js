@@ -5,9 +5,13 @@ import {
     TouchableOpacity,
     View,
     StyleSheet,
+    Modal,
+    Pressable
   } from "react-native";
   
-  // Dummmy Data (Array of Object)
+  import { useState } from "react";
+  
+  // Dummmy Data (Array of Object) 
   const datas = [
     {
       id: 1,
@@ -79,15 +83,47 @@ import {
   
   // Functional Component
   const List = () => {
+    // Modal State
+    const [modalVisible, setModalVisible] = useState(false);
+    const [itemSelect, setItemSelect] = useState('kosong');
+    
+    console.log(itemSelect);
+
     // Arrow Function with destructured argument
     const renderItem = ({ item }) => {
+      // console.log(item);
       return (
-        <TouchableOpacity style={styles.view} onPress={() => alert("Pressed")}>
+        // Modal Component
+        <TouchableOpacity style={styles.view} onPress={() => {setModalVisible(true); setItemSelect(item)}}>
           <View>
+            <Modal        
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+              setModalVisible(!modalVisible);}}>
+              <View style={styles.modalView}>
+              <Image style={styles.modalImage} source={{uri: itemSelect.image }}/>
+              <Text>{itemSelect ? itemSelect.title : 'wleowleo'}</Text>
+                <View style={{ alignItems: 'center' }}>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={{ padding: 5 }}>Close</Text>
+                  </Pressable>
+                </View>
+              </View>    
+            </Modal>
             <Image source={{ uri: item.image }} style={styles.image} />
             <Text style={styles.text}>{item.title}</Text>
           </View>
         </TouchableOpacity>
+      // <TouchableOpacity style={styles.view} onPress={() => alert("Pressed")}>
+      //   <View>
+      //     <Image source={{ uri: item.image }} style={styles.image} />
+      //     <Text style={styles.text}>{item.title}</Text>
+      //   </View>
+      // </TouchableOpacity>
       );
     };
   
@@ -99,6 +135,7 @@ import {
       />
     );
   };
+  
   
   // Styles
   const styles = StyleSheet.create({
@@ -115,7 +152,41 @@ import {
       fontSize: 18,
       paddingTop: 10,
     },
+    modalView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      marginVertical:30,
+      borderRadius: 20,
+      padding: 35,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+     
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2,
+    },
+    buttonOpen: {
+      backgroundColor: '#F194FF',
+    },
+    buttonClose: {
+      backgroundColor: '#2196F3',
+    },
+    modalImage: {
+      height: 200,
+      width: '70%',
+      borderRadius: 8,
+      marginBottom: 20,
+    },
   });
   
   export default List;
-  
